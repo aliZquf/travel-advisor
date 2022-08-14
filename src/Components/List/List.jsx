@@ -4,23 +4,11 @@ import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, 
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import useStyles from './style.js';
 
-const List = () =>{
+const List = ({places,childClick}) =>{
+    console.log({childClick});
     const classes = useStyles()
     const [type,setType]= useState("resturant");
     const [rate,setRate]= useState("0");
-    const plases = [
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-        {name:"paasdsda"},
-    ]
     return (
         <div className={classes.container}>
             <Typography variant="h4" className={classes.title}>
@@ -42,7 +30,7 @@ const List = () =>{
                 </Select>
             </FormControl>
             <Grid container spacing={3} className={classes.list}>
-                {plases?.map((place, i)=>(
+                {places?.map((place, i)=>(
                     <Grid item key={i} xs={12}>
                         <PlaceDetails place={place}/>
                     </Grid>
