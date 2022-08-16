@@ -23,7 +23,6 @@ const classes = useStyles()
         onChange={(e)=>{
           setCoordinates({ lat: e.center.lat, lng: e.center.lng })
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
-          console.log("a",e.marginBounds);
 
         }}
         onChildClick={(child) =>{

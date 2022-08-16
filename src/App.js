@@ -7,20 +7,24 @@ import List from './Components/List/List'
 import {getPlacesDate} from './API'
 
 const App = ()=>{
-const [places,setPlaces] = useState([])
+const [places,setPlaces] = useState([]||0)
 const [coordinates,setCoordinates] = useState()
 const [bounds,setBounds]= useState("")
 const [childClick,setChildClick]= useState("")
+const [isLoading,setIsLoading]= useState(false)
+
 useEffect(()=>{
     navigator.geolocation.getCurrentPosition(({coords:{latitude,longitude}})=>{
         setCoordinates({lat:latitude,lng:longitude})
     })
 },[])
     useEffect(()=>{
+        setIsLoading(true)
         getPlacesDate(bounds.sw, bounds.ne)
         .then((data)=>{
             console.log(data);
             setPlaces(data)
+            setIsLoading(false)
         })
     },[coordinates,bounds])
     return (
@@ -31,6 +35,7 @@ useEffect(()=>{
             <Grid item xs={12} md={4}>
                 <List places={places}
                 childClick={childClick}
+                isLoading={isLoading}
                 />
             </Grid>
             <Grid item xs={12} md={8}>

@@ -16,6 +16,9 @@ export const getPlacesDate = async (sw,ne) => {
             'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
           }
         });
+        
+        // 'eb81524684msh7a7a6ac234074dap11a3d1jsn5758e06c8646'
+        // 41040107e3msh489980735cd8cb8p1e9517jsn5641c61bbe94
     
         
         return data;
