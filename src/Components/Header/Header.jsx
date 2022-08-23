@@ -7,6 +7,7 @@ import useStyles from './style.js';
 
 const Header = () =>{
     const classes = useStyles()
+
     return (
         
         <AppBar position="static">
@@ -18,7 +19,7 @@ const Header = () =>{
                     <Typography variant="h6" className={classes.title}>
                     Explore new places
                     </Typography>
-                    {/* <Autocomplete> */}
+                    {/* <Autocomplete  onLoad={onLoad} onPlaceChanged={onPlaceChanged}> */}
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon/>

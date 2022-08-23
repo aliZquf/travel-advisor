@@ -4,23 +4,28 @@ import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, 
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import useStyles from './style.js';
 
-const List = ({places,childClick,isLoading}) =>{
+const List = ({places,childClick,isLoading,setRate,rate,setType,type}) =>{
     console.log({childClick});
     const classes = useStyles()
-    const [type,setType]= useState("resturant");
-    const [rate,setRate]= useState("0");
     const [elRef,setElRef]= useState([]);
 
     useEffect(() => {
         // 
-        setElRef((refs) => Array(places?.length).fill().map((_, i) => refs[i] || createRef()));
+       const refs = Array(places?.length).fill().map((_, i) => elRef[i] || createRef());
+       setElRef(refs);
+       console.log(elRef);
       }, [places]);
+    //   useEffect(() => {
+    //     setElRef((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+    //     console.log();
+    //   }, [places]);
+  
     return (
         <div className={classes.container}>
             <Typography variant="h4" className={classes.title}>
             Food & Dining around you
             </Typography>
-            {isLoading?(
+            {isLoading ? (
                 <div className={classes.loading}>
                     <CircularProgress size="5rem"/>
                 </div>
@@ -28,7 +33,7 @@ const List = ({places,childClick,isLoading}) =>{
                 <>
             <FormControl className={classes.formControl}>
                 <Select value={type} onChange={(e)=>setType(e.target.value)}>
-                    <MenuItem value="resturant">Resturant</MenuItem>
+                    <MenuItem value="restaurants">Resturant</MenuItem>
                     <MenuItem value="hotels">Hotels</MenuItem>
                     <MenuItem value="attractions">Attractions</MenuItem>
                 </Select>
@@ -43,11 +48,13 @@ const List = ({places,childClick,isLoading}) =>{
             </FormControl>
             <Grid container spacing={3} className={classes.list}>
                 {places?.map((place, i)=>(
-                    <Grid item key={i} xs={12}>
-                        <PlaceDetails place={place}
-                        selected={Number(childClick === i)}
-                        refProp={elRef[i]}
+                    <Grid ref={elRef[i]} item key={i} xs={12}>
+                        <PlaceDetails 
+                           selected={Number(childClick) === i}
+                           refProp={elRef[i]}
+                           place={place}
                         />
+                          
                     </Grid>
                 ))}
             </Grid>

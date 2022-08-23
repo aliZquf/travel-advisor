@@ -7,44 +7,63 @@ import List from './Components/List/List'
 import {getPlacesDate} from './API'
 
 const App = ()=>{
-const [places,setPlaces] = useState([]||0)
-const [coordinates,setCoordinates] = useState()
-const [bounds,setBounds]= useState("")
-const [childClick,setChildClick]= useState("")
-const [isLoading,setIsLoading]= useState(false)
+const [places,setPlaces] = useState([]);
+const [coordinates,setCoordinates] = useState({});
+const [bounds,setBounds]= useState(null);
+const [childClick,setChildClick]= useState(null);
+const [isLoading,setIsLoading]= useState(false);
+const [type, setType] = useState('restaurants');
+const [rate,setRate]= useState("");
+const [filterPlace,setFilterPlace]= useState([])
 
 useEffect(()=>{
     navigator.geolocation.getCurrentPosition(({coords:{latitude,longitude}})=>{
         setCoordinates({lat:latitude,lng:longitude})
     })
 },[])
+
+useEffect(()=>{
+    const filter = places.filter((place) => Number(place.rating) > rate);
+    setFilterPlace(filter)
+},[rate])
+
     useEffect(()=>{
-        setIsLoading(true)
-        getPlacesDate(bounds.sw, bounds.ne)
+      if(bounds){  
+        setIsLoading(true);
+
+        getPlacesDate(type,bounds.sw, bounds.ne)
         .then((data)=>{
-            console.log(data);
             setPlaces(data)
-            setIsLoading(false)
+            setFilterPlace([])
+            setIsLoading(false);
         })
-    },[coordinates,bounds])
+    }
+    },[coordinates,bounds,type])
     return (
         <>
         <CssBaseline/>
         <Header />
         <Grid container spacing={3} style={{width: '100%'}}>
             <Grid item xs={12} md={4}>
-                <List places={places}
-                childClick={childClick}
-                isLoading={isLoading}
+                <List
+                     isLoading={isLoading}
+                     childClick={childClick}
+                     places={filterPlace.length ? filterPlace : places}
+                     type={type}
+                     setType={setType}
+                     rate={rate}
+                     setRate={setRate}
+
                 />
             </Grid>
             <Grid item xs={12} md={8}>
                 <Map
+                setChildClick={setChildClick}
                 setCoordinates={setCoordinates}
                 setBounds={setBounds}
                 coordinates = {coordinates}
-                places={places}
-                setChildClick={setChildClick}
+                places={filterPlace.length ? filterPlace : places}
+                
                 />
             </Grid>
         </Grid>
