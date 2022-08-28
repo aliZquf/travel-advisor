@@ -55,13 +55,6 @@ const classes = useStyles()
               </div>
              ))
           }
-  {
-    WeatherData?.list?.map((data,i)=>(
-      <div key={i} lat={data.coord.lat} lng={data.coord.lon}>
-        <img height={100} src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`}/>
-      </div>
-    ))
-  }
         </GoogleMapReact>
       </div>
     )

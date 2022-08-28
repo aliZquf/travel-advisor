@@ -10,16 +10,10 @@ const List = ({places,childClick,isLoading,setRate,rate,setType,type}) =>{
     const [elRef,setElRef]= useState([]);
 
     useEffect(() => {
-        // 
        const refs = Array(places?.length).fill().map((_, i) => elRef[i] || createRef());
        setElRef(refs);
        console.log(elRef);
       }, [places]);
-    //   useEffect(() => {
-    //     setElRef((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
-    //     console.log();
-    //   }, [places]);
-  
     return (
         <div className={classes.container}>
             <Typography variant="h4" className={classes.title}>
@@ -32,6 +26,7 @@ const List = ({places,childClick,isLoading,setRate,rate,setType,type}) =>{
             ):(
                 <>
             <FormControl className={classes.formControl}>
+            <InputLabel id="type">Type</InputLabel>
                 <Select value={type} onChange={(e)=>setType(e.target.value)}>
                     <MenuItem value="restaurants">Resturant</MenuItem>
                     <MenuItem value="hotels">Hotels</MenuItem>
@@ -39,7 +34,8 @@ const List = ({places,childClick,isLoading,setRate,rate,setType,type}) =>{
                 </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
-                <Select value={rate} onChange={(e)=>setRate(e.target.value)}>
+            <InputLabel id="rate">Rating</InputLabel>
+                <Select id="rate" value={rate} onChange={(e)=>setRate(e.target.value)}>
                 <MenuItem value="0">All</MenuItem>
               <MenuItem value="3">Above 3.0</MenuItem>
               <MenuItem value="4">Above 4.0</MenuItem>

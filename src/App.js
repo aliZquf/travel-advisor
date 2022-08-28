@@ -4,13 +4,12 @@ import Header from './Components/Header/Header'
 import Map from './Components/Map/Map'
 import List from './Components/List/List'
 
-import {getPlacesDate} from './API'
-import {getWeatherData} from './API'
+import getPlacesDate from './API'
+
 
 
 const App = ()=>{
 const [places,setPlaces] = useState([]);
-const [WeatherData,setWeatherData] = useState([]);
 const [coordinates,setCoordinates] = useState({});
 const [bounds,setBounds]= useState(null);
 const [childClick,setChildClick]= useState(null);
@@ -26,18 +25,13 @@ useEffect(()=>{
 },[])
 
 useEffect(()=>{
-    const filter = places.filter((place) => Number(place.rating) > rate);
+    const filter = places?.filter((place) => Number(place.rating) > rate);
     setFilterPlace(filter)
-},[rate])
+}, [rate,places])
 
-    useEffect(()=>{
+ useEffect(()=>{
       if(bounds){  
         setIsLoading(true);
-        getWeatherData(coordinates.lat,coordinates.lng)
-        .then((data)=>(
-            setWeatherData({data})
-        ))
-
         getPlacesDate(type,bounds.sw, bounds.ne)
         .then((data)=>{
             setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
@@ -70,7 +64,7 @@ useEffect(()=>{
                 setBounds={setBounds}
                 coordinates = {coordinates}
                 places={filterPlace.length ? filterPlace : places}
-                WeatherData={WeatherData}
+                
                 />
             </Grid>
         </Grid>
