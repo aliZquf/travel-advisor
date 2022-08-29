@@ -49,12 +49,11 @@ useEffect(()=>{
                 <List
                      isLoading={isLoading}
                      childClick={childClick}
-                     places={filterPlace.length ? filterPlace : places}
+                     places={filterPlace?.length ? filterPlace : places}
                      type={type}
                      setType={setType}
                      rate={rate}
                      setRate={setRate}
-
                 />
             </Grid>
             <Grid item xs={12} md={8}>
@@ -63,7 +62,7 @@ useEffect(()=>{
                 setCoordinates={setCoordinates}
                 setBounds={setBounds}
                 coordinates = {coordinates}
-                places={filterPlace.length ? filterPlace : places}
+                places={filterPlace?.length ? filterPlace : places}
                 
                 />
             </Grid>
